@@ -363,7 +363,7 @@
                 <li>
                     <a href="#تکنیکهای-مهندسی-پرامپت">4. تکنیک‌های مهندسی پرامپت</a>
                     <ul class="toc-sub">
-                        <li><a href="#پرامپت-صفر-شات-zero-shot">پرامپت صفر-شات (Zero-shot)</a></li>
+                        <li><a href="#پرامپت-زیرو-شات-zero-shot">پرامپت زیرو-شات (Zero-shot)</a></li>
                         <li><a href="#پرامپت-تک-شات-و-چند-شات-one-shot--few-shot">پرامپت تک-شات و چند-شات (One-shot & Few-shot)</a></li>
                         <li><a href="#پرامپت-سیستمی-system-prompting">پرامپت سیستمی (System Prompting)</a></li>
                         <li><a href="#پرامپت-نقش-role-prompting">پرامپت نقش (Role Prompting)</a></li>
@@ -500,26 +500,21 @@
                 
                 <p>حال که درک می‌کنیم مهندسی پرامپت چیست و چه چیزی نیاز دارد، بیایید به برخی از مثال‌های مهم‌ترین تکنیک‌های پرامپت بپردازیم.</p>
                 
-                <div id="پرامپت-صفر-شات-zero-shot" class="section">
-                    <h3>پرامپت صفر-شات (Zero-shot)</h3>
-                    <p>یک پرامپت صفر-شات ساده‌ترین نوع پرامپت است. این فقط توصیفی از یک وظیفه و برخی متن‌ها را برای شروع کار LLM ارائه می‌دهد. این ورودی می‌تواند هر چیزی باشد: یک سؤال، شروع یک داستان، یا دستورالعمل‌ها. نام صفر-شات به معنای 'بدون مثال' است.</p>
+                <div id="پرامپت-زیرو-شات-zero-shot" class="section">
+                    <h3>پرامپت زیرو-شات (Zero-shot)</h3>
+                    <p>یک پرامپت زیرو-شات ساده‌ترین نوع پرامپت است. این فقط توصیفی از یک وظیفه و برخی متن‌ها را برای شروع کار LLM ارائه می‌دهد. این ورودی می‌تواند هر چیزی باشد: یک سؤال، شروع یک داستان، یا دستورالعمل‌ها. نام زیرو-شات به معنای 'بدون مثال' است.</p>
                     
-                    <p>بیایید از Vertex AI Studio (برای زبان) در Vertex AI استفاده کنیم، که یک محیط آزمایشی برای تست پرامپت‌ها ارائه می‌دهد. در جدول 1، یک مثال پرامپت صفر-شات برای طبقه‌بندی نقدهای فیلم خواهید دید.</p>
+                    <p>بیایید از Vertex AI Studio (برای زبان) در Vertex AI استفاده کنیم، که یک محیط آزمایشی برای تست پرامپت‌ها ارائه می‌دهد. در جدول 1، یک مثال پرامپت زیرو-شات برای طبقه‌بندی نقدهای فیلم خواهید دید.</p>
                     
                     <p>فرمت جدول که در زیر استفاده شده است، روش عالی برای مستندسازی پرامپت‌ها است. پرامپت‌های شما احتمالاً قبل از اینکه در یک کد قرار بگیرند، از چندین تکرار عبور خواهند کرد، بنابراین مهم است که کار مهندسی پرامپت خود را به روشی منظم و ساختاریافته پیگیری کنید. اطلاعات بیشتر در مورد این فرمت جدول، اهمیت پیگیری کار مهندسی پرامپت و فرآیند توسعه پرامپت در بخش بهترین شیوه‌ها در ادامه این فصل ("مستندسازی تلاش‌های مختلف پرامپت") آمده است.</p>
                     
                     <p>دمای مدل باید روی عدد پایینی تنظیم شود، زیرا نیازی به خلاقیت نیست، و ما از مقادیر پیش‌فرض Top-K و Top-P مدل gemini-pro استفاده می‌کنیم، که به طور مؤثر هر دو تنظیم را غیرفعال می‌کند (به 'تنظیمات خروجی LLM' در بالا مراجعه کنید). به خروجی تولید شده توجه کنید. کلمات "disturbing" و "masterpiece" باید پیش‌بینی را کمی پیچیده‌تر کنند، زیرا هر دو کلمه در یک جمله استفاده شده‌اند.</p>
                     
-                    <p><strong>مثال پرامپت صفر-شات:</strong></p>
+                    <p><strong>مثال پرامپت زیرو-شات:</strong></p>
                     
-                    <pre><code>Classify movie reviews as POSITIVE, NEUTRAL or NEGATIVE.
-Review: "Her" is a disturbing study revealing the direction humanity is headed if AI is allowed to keep evolving, unchecked. I wish there were more movies like this masterpiece.
-Sentiment:</code></pre>
+                    <img src="images/zero-shot.png" width="700" />
                     
-                    <p><strong>خروجی:</strong></p>
-                    <pre><code>POSITIVE</code></pre>
-                    
-                    <p>وقتی صفر-شات کار نمی‌کند، می‌توانید نمونه‌ها یا مثال‌هایی را در پرامپت ارائه دهید، که منجر به پرامپت "تک-شات" و "چند-شات" می‌شود.</p>
+                    <p>وقتی زیرو-شات کار نمی‌کند، می‌توانید نمونه‌ها یا مثال‌هایی را در پرامپت ارائه دهید، که منجر به پرامپت "تک-شات" و "چند-شات" می‌شود.</p>
                 </div>
                 
                 <div id="پرامپت-تک-شات-و-چند-شات-one-shot--few-shot" class="section">
@@ -530,37 +525,33 @@ Sentiment:</code></pre>
                     
                     <p>یک پرامپت چند-شات چندین مثال ارائه می‌دهد. این به مدل کمک می‌کند تا الگوها را بهتر درک کند و پاسخ‌های دقیق‌تری تولید کند.</p>
                     
-                    <p><strong>مثال پرامپت تک-شات:</strong></p>
-                    
-                    <pre><code>Classify movie reviews as POSITIVE, NEUTRAL or NEGATIVE.
 
-Review: The movie was entertaining with great special effects, but the plot was predictable.
-Sentiment: NEUTRAL
-
-Review: "Her" is a disturbing study revealing the direction humanity is headed if AI is allowed to keep evolving, unchecked. I wish there were more movies like this masterpiece.
-Sentiment:</code></pre>
-                    
-                    <p><strong>خروجی:</strong></p>
-                    <pre><code>POSITIVE</code></pre>
-                    
                     <p><strong>مثال پرامپت چند-شات:</strong></p>
                     
-                    <pre><code>Classify movie reviews as POSITIVE, NEUTRAL or NEGATIVE.
-
-Review: The movie was entertaining with great special effects, but the plot was predictable.
-Sentiment: NEUTRAL
-
-Review: This film is an absolute waste of time with terrible acting and a nonsensical story.
-Sentiment: NEGATIVE
-
-Review: I was completely blown away by this masterpiece. The direction, acting, and screenplay were all perfect.
-Sentiment: POSITIVE
-
-Review: "Her" is a disturbing study revealing the direction humanity is headed if AI is allowed to keep evolving, unchecked. I wish there were more movies like this masterpiece.
-Sentiment:</code></pre>
-                    
-                    <p><strong>خروجی:</strong></p>
-                    <pre><code>POSITIVE</code></pre>
+                    <img src="images/few-one-shot1.png" width="700" />
+                    <img src="images/few-one-shot2.png" width="700" />
+                    <p>
+                        System، Context و Role Prompting همگی تکنیک‌هایی هستند که برای هدایت نحوه تولید متن توسط مدل‌های زبانی بزرگ (LLMs) استفاده می‌شوند، اما هر کدام روی جنبه‌های متفاوتی تمرکز دارند:
+                    </p>
+                    <p>
+                        <ul>
+                            <li>
+                                System Prompting:
+                                این تکنیک، کانتکس کلی و هدف اصلی را برای مدل زبانی مشخص می‌کند. به زبان ساده، مثل این است که به مدل بگوییم «قراره چی کار کنی». مثلاً بهش می‌گیم که باید یک متن رو ترجمه کنه، یا یک نظر رو دسته‌بندی کنه. این یه تصویر بزرگ از وظیفه مدل بهش می‌ده.
+                            </li>
+                            <li>
+                                Contextual Prompting:
+                                این تکنیک، جزئیات خاص یا اطلاعات پس‌زمینه‌ای رو که به موضوع یا وظیفه فعلی مربوط می‌شه، به مدل می‌ده. مثلاً اگه ازش سوالی پرسیده بشه، این اطلاعات به مدل کمک می‌کنه بفهمه دقیقاً چی خواسته شده و جوابش رو بر اساس اون تنظیم کنه.        
+                            </li>
+                            <li>
+                                Role Prompting:
+                                اینجا به مدل یک شخصیت یا هویت خاص می‌دیم که طبق اون رفتار کنه. مثلاً می‌گیم «تو یه معلم هستی» یا «مثل یه دوست حرف بزن». این کار باعث می‌شه جواب‌هایی که مدل می‌ده، با اون نقش و دانش و رفتاری که براش تعریف کردیم، هم‌خونی داشته باشه.
+                            </li>
+                        </ul>
+                        <p>
+                            شباهت‌ها و تفاوت‌ها بین System، Contextual و Role Prompting ممکنه هم‌پوشانی زیادی وجود داشته باشه. مثلاً یه دستوری که به مدل یه نقش می‌ده (مثل «تو یه مترجم باش»)، می‌تونه همزمان زمینه‌ای هم داشته باشه (مثل «این متن رو از فارسی به انگلیسی ترجمه کن»). ولی هر کدوم یه هدف اصلی متفاوت دارن:        
+                        </p>
+                    </p>
                 </div>
                 
                 <div id="پرامپت-سیستمی-system-prompting" class="section">
