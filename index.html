@@ -8,7 +8,9 @@
         @import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&family=Vazirmatn:wght@100..900&display=swap');
     </style>
     <style>
-        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+        }
         /* Global styles */
         :root {
             --primary-color: #4285f4;
@@ -560,9 +562,9 @@
                     
                     <p><strong>مثال پرامپت سیستمی:</strong></p>
                     
-                    <pre><code>You are a helpful, concise assistant that specializes in explaining complex technical concepts in simple terms. Your responses should be accurate but easy to understand for non-technical users.
+                    <img src="images/system-prompt.png" width="700" />
+                    <img src="images/system-prompt2.png" width="700" />
 
-User: Explain how large language models work.</code></pre>
                 </div>
                 
                 <div id="پرامپت-نقش-role-prompting" class="section">
@@ -571,27 +573,20 @@ User: Explain how large language models work.</code></pre>
                     
                     <p><strong>مثال پرامپت نقش:</strong></p>
                     
-                    <pre><code>Act as an experienced software developer specializing in Python. Review the following code and suggest improvements for readability and performance:
+                    <img src="images/role-prompt.png" width="700" />
 
-def process_data(data_list):
-    result = []
-    for i in range(len(data_list)):
-        if data_list[i] % 2 == 0:
-            result.append(data_list[i] * 2)
-        else:
-            result.append(data_list[i] * 3)
-    return result</code></pre>
+                    <img src="images/role-prompt2.png" width="700" />
                 </div>
                 
                 <div id="پرامپت-زمینهای-contextual-prompting" class="section">
-                    <h3>پرامپت زمینه‌ای (Contextual Prompting)</h3>
-                    <p>پرامپت زمینه‌ای شامل ارائه اطلاعات زمینه‌ای اضافی به مدل است تا به آن کمک کند پاسخ‌های دقیق‌تر و مرتبط‌تری تولید کند.</p>
+                    <h3>پرامپت کانتکسچوال (Contextual Prompting)</h3>
+                    <p>پرامپت کانتکسچوال شامل ارائه اطلاعات زمینه‌ای اضافی به مدل است تا به آن کمک کند پاسخ‌های دقیق‌تر و مرتبط‌تری تولید کند.</p>
                     
-                    <p><strong>مثال پرامپت زمینه‌ای:</strong></p>
+                    <p><strong>مثال پرامپت Contextual:</strong></p>
                     
-                    <pre><code>Context: The company XYZ Corp has recently launched a new product line of eco-friendly household cleaners. The target market is environmentally conscious consumers aged 25-45. The company wants to expand its online presence.
 
-Task: Create a social media marketing strategy for XYZ Corp's new product line.</code></pre>
+                    <img src="images/contextual-prompt.png" width="700" />
+
                 </div>
                 
                 <div id="پرامپت-قدم-به-عقب-step-back-prompting" class="section">
@@ -600,14 +595,9 @@ Task: Create a social media marketing strategy for XYZ Corp's new product line.<
                     
                     <p><strong>مثال پرامپت قدم به عقب:</strong></p>
                     
-                    <pre><code>Question: What will happen if we continue to burn fossil fuels at the current rate?
 
-Before answering directly, take a step back and consider:
-1. What are fossil fuels and how do they affect the environment?
-2. What are the current rates of fossil fuel consumption globally?
-3. What scientific consensus exists about the long-term effects?
+                    <img src="images/step-back.png" width="700" />
 
-Now, provide a comprehensive answer to the original question.</code></pre>
                 </div>
                 
                 <div id="زنجیره-تفکر-chain-of-thought" class="section">
@@ -616,8 +606,12 @@ Now, provide a comprehensive answer to the original question.</code></pre>
                     
                     <p><strong>مثال زنجیره تفکر:</strong></p>
                     
-                    <pre><code>Solve this problem step by step:
-If John has 5 apples and gives 2 to Mary, then buys 3 more apples and gives half of all his apples to Tom, how many apples does John have left?</code></pre>
+
+                    <img src="images/CoT1.png" width="700" />
+
+                    <img src="images/CoT2.png" width="700" />
+
+                    <img src="images/CoT3.png" width="700" />
                 </div>
                 
                 <div id="خودسازگاری-self-consistency" class="section">
@@ -626,17 +620,8 @@ If John has 5 apples and gives 2 to Mary, then buys 3 more apples and gives half
                     
                     <p><strong>مثال خودسازگاری:</strong></p>
                     
-                    <pre><code>Generate three different approaches to solve this problem, then determine which solution is most likely correct:
+                    <img src="images/self-consistency.png" width="700" />
 
-A store has a 25% off sale. If an item originally costs $80, what is the sale price?
-
-Approach 1:
-
-Approach 2:
-
-Approach 3:
-
-Most consistent answer:</code></pre>
                 </div>
                 
                 <div id="درخت-تفکرات-tree-of-thoughts" class="section">
@@ -644,7 +629,8 @@ Most consistent answer:</code></pre>
                     <p>درخت تفکرات (ToT) یک گسترش از زنجیره تفکر است که به مدل اجازه می‌دهد چندین مسیر استدلال را کاوش کند و مسیرهای غیرامیدوارکننده را هرس کند.</p>
                     
                     <p><strong>مثال درخت تفکرات:</strong></p>
-                    
+                    <img src="images/ToT.png" width="700" />
+
                     <pre><code>Solve this puzzle by exploring multiple possible solutions:
 
 You have 8 balls that all look identical. One of them is slightly heavier than the others. Using a balance scale, how can you identify the heavier ball with just 2 weighings?
@@ -662,22 +648,9 @@ Now, let's evaluate each approach and determine which one is correct.</code></pr
                     <p>واکنش (ReAct) ترکیبی از استدلال و عمل است. مدل بین استدلال درباره یک مسئله و انجام اقدامات برای جمع‌آوری اطلاعات بیشتر تناوب دارد.</p>
                     
                     <p><strong>مثال واکنش:</strong></p>
+                    <img src="images/ReAct.png" width="700" />
+                    <img src="images/ReAct1.png" width="700" />
                     
-                    <pre><code>You are an AI assistant that can reason about problems and take actions to gather more information.
-
-Question: What is the capital of the country where the Pyramids of Giza are located, and what is the population of this capital?
-
-Thought: I need to first identify the country where the Pyramids of Giza are located.
-Action: Search for "location of Pyramids of Giza"
-
-Observation: The Pyramids of Giza are located in Egypt.
-
-Thought: Now I know the Pyramids of Giza are in Egypt. The capital of Egypt is Cairo. Now I need to find the population of Cairo.
-Action: Search for "population of Cairo Egypt"
-
-Observation: The population of Cairo, Egypt is approximately 9.7 million people (2021 estimate).
-
-Answer: The capital of Egypt, where the Pyramids of Giza are located, is Cairo. The population of Cairo is approximately 9.7 million people.</code></pre>
                 </div>
             </div>
             
@@ -691,32 +664,8 @@ Answer: The capital of Egypt, where the Pyramids of Giza are located, is Cairo. 
                     
                     <p><strong>مثال پرامپت برای نوشتن کد:</strong></p>
                     
-                    <pre><code>Write a Python function that takes a list of numbers as input and returns the sum of all even numbers in the list. Include comments to explain your code.</code></pre>
-                    
-                    <p><strong>خروجی:</strong></p>
-                    <pre><code>def sum_even_numbers(numbers):
-    """
-    Calculate the sum of all even numbers in a list.
-    
-    Args:
-        numbers (list): A list of numbers
-        
-    Returns:
-        int: The sum of all even numbers in the list
-    """
-    # Initialize the sum to zero
-    even_sum = 0
-    
-    # Iterate through each number in the list
-    for num in numbers:
-        # Check if the number is even
-        if num % 2 == 0:
-            # Add the even number to our sum
-            even_sum += num
-    
-    # Return the final sum
-    return even_sum</code></pre>
-                    
+                    <img src="images/wiring-code.png" width="700" />
+
                     <p>برای وظایف پیچیده‌تر، می‌توانید جزئیات بیشتری ارائه دهید:</p>
                     
                     <pre><code>Create a Python class for a Bank Account with the following features:
@@ -735,16 +684,9 @@ Use proper documentation and follow PEP 8 style guidelines.</code></pre>
                     
                     <p><strong>مثال پرامپت برای توضیح کد:</strong></p>
                     
-                    <pre><code>Explain the following Python code line by line:
+                    <img src="images/explain01.png" width="700" />
+                    <img src="images/explain02.png" width="700" />
 
-def quicksort(arr):
-    if len(arr) <= 1:
-        return arr
-    pivot = arr[len(arr) // 2]
-    left = [x for x in arr if x < pivot]
-    middle = [x for x in arr if x == pivot]
-    right = [x for x in arr if x > pivot]
-    return quicksort(left) + middle + quicksort(right)</code></pre>
                 </div>
                 
                 <div id="ترجمه-کد" class="section">
@@ -753,18 +695,9 @@ def quicksort(arr):
                     
                     <p><strong>مثال پرامپت برای ترجمه کد:</strong></p>
                     
-                    <pre><code>Translate the following JavaScript code to Python:
+                    <img src="images/translate1.png" width="700" />
+                    <img src="images/translate2.png" width="700" />
 
-function fibonacci(n) {
-    if (n <= 1) return n;
-    let a = 0, b = 1;
-    for (let i = 2; i <= n; i++) {
-        let temp = a + b;
-        a = b;
-        b = temp;
-    }
-    return b;
-}</code></pre>
                 </div>
                 
                 <div id="اشکالزدایی-و-بررسی-کد" class="section">
@@ -772,28 +705,26 @@ function fibonacci(n) {
                     <p>LLM‌ها می‌توانند در شناسایی و رفع اشکالات در کد کمک کنند.</p>
                     
                     <p><strong>مثال پرامپت برای اشکال‌زدایی کد:</strong></p>
-                    
-                    <pre><code>Debug the following Python code that is supposed to find the largest number in a list, but has errors:
+                   
+                    <img src="images/debug-review.png" width="700" />
 
-def find_largest(numbers):
-    largest = 0
-    for num in numbers:
-        if num > largest:
-            largest = num
-    return largest
-
-# This should return 10, but returns 0
-test = find_largest([-5, -10, -2, -1])</code></pre>
+                    <img src="images/debug-prompt1.png" width="700" />
+                    <img src="images/debug-prompt2.png" width="700" />
+                    <img src="images/debug-prompt3.png" width="700" />
+                    <img src="images/debug-prompt4.png" width="700" />
                 </div>
             </div>
             
             <div id="بهترین-شیوههای-مهندسی-پرامپت" class="section">
-                <h2>6. بهترین شیوه‌های مهندسی پرامپت</h2>
+                <h2>6. بهترین شیوه‌های مهندسی پرامپت
+                    Best Practices
+                </h2>
                 <p>در این بخش، بهترین شیوه‌ها و نکات کاربردی برای مهندسی پرامپت موثر را بررسی می‌کنیم.</p>
 
                 <div id="ارائه-مثالها" class="section">
                     <h3>ارائه مثال‌ها</h3>
-                    <p>ارائه مثال‌های واضح می‌تواند به مدل کمک کند تا الگوها را بهتر درک کند و پاسخ‌های دقیق‌تری تولید کند.</p>
+                    <p>مهم‌ترین  روش ارايه مثال هست (تک-شات و چند-شات) با پرامپت هست</p>
+                    <p>ارائه مثال‌های واضح می‌تواند به مدل کمک کند تا الگوها را بهتر درک کند و پاسخ‌های دقیق‌تری تولید کند. مثال بسیار بهیته هست چون شبیه یک ابزار آموزشی برای مدل عمل میکند.</p>
                     
                     <p><strong>نکته:</strong> برای وظایف پیچیده، از پرامپت چند-شات با مثال‌های متنوع استفاده کنید.</p>
                     
@@ -811,46 +742,103 @@ French:</code></pre>
                 <div id="طراحی-با-سادگی" class="section">
                     <h3>طراحی با سادگی</h3>
                     <p>پرامپت‌های ساده و مستقیم اغلب بهترین نتایج را تولید می‌کنند. از زبان پیچیده یا دستورالعمل‌های مبهم خودداری کنید.</p>
-                    
-                    <p><strong>بد:</strong></p>
-                    <pre><code>با توجه به اینکه شما یک متخصص در زمینه تحلیل داده هستید و با در نظر گرفتن اهمیت روش‌های آماری در استخراج بینش‌های معنادار از مجموعه داده‌های بزرگ، لطفاً یک توضیح جامع و کامل از مفهوم رگرسیون خطی و کاربردهای آن در تحلیل پیش‌بینی ارائه دهید.</code></pre>
-                    
-                    <p><strong>خوب:</strong></p>
-                    <pre><code>Explain linear regression and its applications in predictive analytics. Keep it simple and clear.</code></pre>
+                    <p>اگر پرامپت برای خود شما هم گنگ هست، مطمعن باشید برای مدل هم نامفهوم است.</p>
+
+                    <img src="images/bp-simplicity.png" width="700" />
+
+                    <p>
+                        در نوشتن پرامپ از افعال شبیه زیر می‌توانید استفاده کنید:
+                    </p>
+                    <p dir="ltr">
+                        <b>
+                            Act, Analyze, Categorize, Classify, Contrast, Compare, Create, Describe, Define,
+                            Evaluate, Extract, Find, Generate, Identify, List, Measure, Organize, Parse, Pick,
+                            Predict, Provide, Rank, Recommend, Return, Retrieve, Rewrite, Select, Show, Sort,
+                            Summarize, Translate, Write. 
+                        </b>                       
+                    </p>
                 </div>
                 
                 <div id="مشخص-کردن-خروجی" class="section">
                     <h3>مشخص کردن خروجی</h3>
-                    <p>فرمت و ساختار خروجی مورد نظر خود را مشخص کنید.</p>
-                    
-                    <pre><code>Create a 5-day weather forecast for Tokyo. Format the output as a table with columns for Day, Temperature (°C), and Conditions.</code></pre>
+                    <p>
+                        خروجی مورد نظرتان را به وضوح مشخص کنید. یک دستور مختصر ممکن است نتواند LLM را به اندازه کافی راهنمایی کند و ممکن است خیلی کلی باشد.
+                    </p>
+                    <img src="images/bp-output.png" width="700" />
+
+                    <!-- <pre><code>Create a 5-day weather forecast for Tokyo. Format the output as a table with columns for Day, Temperature (°C), and Conditions.</code></pre> -->
                     <!-- Content placeholder -->
                 </div>
                 
                 <div id="استفاده-از-دستورالعملها-به-جای-محدودیتها" class="section">
                     <h3>استفاده از دستورالعمل‌ها به جای محدودیت‌ها</h3>
                     <p>به جای گفتن اینکه مدل چه کاری نکند، به آن بگویید چه کاری انجام دهد.</p>
+                    <p>در درخواست‌نویسی (Prompting) برای هدایت خروجی یک مدل زبانی بزرگ (LLM)، از دستورات و محدودیت‌ها استفاده می‌کنیم. این دو ابزار به ما کمک می‌کنند تا پاسخ مدل را به شکلی که می‌خواهیم شکل دهیم. در ادامه، این مفاهیم را به زبان ساده و قابل فهم توضیح می‌دهم:</p>
+                
+                    <h4>دستورات (Instruction) چیست؟</h4>
+                    <p>دستورات، راهنمایی‌های مشخص و واضحی هستند که به مدل می‌گویند پاسخش چه شکل، سبک یا محتوایی باید داشته باشد. به عبارت دیگر، دستورات به مدل می‌گویند که چه کاری انجام دهد یا چه چیزی تولید کند.</p>
+                    <p>مثال: «پاسخ را به صورت یک پاراگراف کوتاه بنویس.»<br>این نوع راهنمایی به مدل کمک می‌کند تا دقیقاً بفهمد چه انتظاری از آن داریم و کارش را در مسیر درست پیش ببرد.</p>
+                
+                    <h4>محدودیت‌ها (Constraint) چیست؟</h4>
+                    <p>محدودیت‌ها، قوانینی هستند که مشخص می‌کنند مدل چه کاری نباید انجام دهد یا از چه چیزی باید دوری کند. این‌ها مثل خطوط قرمزی هستند که پاسخ مدل باید درون آن‌ها بماند.</p>
+                    <p>مثال: «از کلمات پیچیده و فنی استفاده نکن.»<br>محدودیت‌ها کمک می‌کنند تا خروجی مدل در چارچوب مشخص و قابل قبولی بماند.</p>
+                
+                    <h4>چرا دستورات بهتر از محدودیت‌ها هستند؟</h4>
+                    <p>تحقیقات جدید نشان می‌دهد که استفاده از دستورات مثبت معمولاً بهتر از تکیه زیاد بر محدودیت‌ها جواب می‌دهد. این موضوع شبیه به رفتار خود ما آدم‌هاست؛ ما هم راهنمایی‌های مثبت را بیشتر از لیست بلندبالای «این کار را نکن» دوست داریم.</p>
                     
-                    <p><strong>بد:</strong></p>
-                    <pre><code>Write a product description for a smartphone. Don't make it boring or too technical. Don't use clichés.</code></pre>
-                    
-                    <p><strong>خوب:</strong></p>
-                    <pre><code>Write an engaging product description for a smartphone that highlights its unique features in simple, creative language that would appeal to everyday users.</code></pre>
+                    <p>دلیل بهتر بودن دستورات:</p>
+                    <ul>
+                        <li>دستورات به‌طور مستقیم به مدل می‌گویند که چه نتیجه‌ای می‌خواهیم</li>
+                        <li>امکان خلاقیت بیشتر در چارچوب مشخص</li>
+                        <li>جلوگیری از سردرگمی مدل</li>
+                    </ul>
+                
+                    <p>مشکلات محدودیت‌ها:</p>
+                    <ul>
+                        <li>امکان ایجاد سردرگمی در مدل</li>
+                        <li>کاهش خلاقیت</li>
+                        <li>احتمال ایجاد تناقض بین محدودیت‌ها</li>
+                    </ul>
+                
+                    <h4>کی از محدودیت‌ها استفاده کنیم؟</h4>
+                    <p>با اینکه دستورات مثبت بهتر هستند، محدودیت‌ها هم در جاهایی به کار می‌آیند:</p>
+                    <ul>
+                        <li>جلوگیری از تولید محتوای مضر یا اشتباه</li>
+                        <li>نیاز به قالب/سبک خاص (مثلاً محدودیت تعداد کلمات)</li>
+                    </ul>
+                
+                    <h4>نکته مهم: چطور بهتر درخواست بنویسیم؟</h4>
+                    <p>هر وقت می‌شود، از دستورات مثبت استفاده کنید. به جای اینکه به مدل بگویید چه کاری نکند، بگویید چه کاری بکند. این کار سردرگمی را کم می‌کند و باعث می‌شود پاسخ دقیق‌تر و بهتر باشد.</p>
+                    <p>مثال: به جای «مبهم نباش»، بگویید «جزئیات واضح و مشخص بده.»<br>این تغییر ساده باعث می‌شود مدل بهتر بفهمد و نتیجه بهتری بدهد.</p>
+                
+                    <h4>بهترین روش چیست؟</h4>
+                    <ol>
+                        <li>اول با دستورات شروع کنید</li>
+                        <li>فقط در صورت نیاز از محدودیت‌ها استفاده کنید</li>
+                        <li>ترکیب‌های مختلف را آزمایش کنید</li>
+                        <li>نتایج را مستندسازی کنید</li>
+                    </ol>
+                
+                    <img src="images/bp-intructions.png" width="700" />
+
                 </div>
                 
                 <div id="کنترل-طول-توکن" class="section">
                     <h3>کنترل طول توکن</h3>
                     <p>برای کنترل طول پاسخ، محدودیت‌های خاصی را مشخص کنید.</p>
                     
-                    <pre><code>Summarize the history of artificial intelligence in exactly 3 paragraphs.</code></pre>
+                    <img src="images/bp-maxtoken.png" width="500" />
+                    <!-- <pre><code>Summarize the history of artificial intelligence in exactly 3 paragraphs.</code></pre> -->
                 </div>
                 
                 <div id="استفاده-از-متغیرها-در-پرامپتها" class="section">
                     <h3>استفاده از متغیرها در پرامپت‌ها</h3>
                     <p>برای پرامپت‌های قابل استفاده مجدد، از متغیرها استفاده کنید که می‌توانند با مقادیر مختلف جایگزین شوند.</p>
                     
-                    <pre><code>Analyze the sentiment of the following text as positive, negative, or neutral:
-{{TEXT}}</code></pre>
+                    <img src="images/bp-variables.png" width="700" />
+
+                    <!-- <pre><code>Analyze the sentiment of the following text as positive, negative, or neutral:
+{{TEXT}}</code></pre> -->
                     <!-- Content placeholder -->
                 </div>
                 
