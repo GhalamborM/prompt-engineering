@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آموزش مهندسی پرامپت (Prompt Engineering)</title>
+    <style>
+        /* Global styles */
+        :root {
+            --primary-color: #4285f4;
+            --secondary-color: #34a853;
+            --accent-color: #ea4335;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --border-color: #e0e0e0;
+            --code-bg: #f5f5f5;
+            --code-border: #ddd;
+            --toc-bg: #f0f4f8;
+            --header-bg: #e8f0fe;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Tahoma', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            padding: 0;
+            margin: 0;
+            text-align: right;
+            direction: rtl;
+        }
+        
+        /* Container styles */
+        .container {
+            display: flex;
+            flex-direction: row-reverse;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Header styles */
+        header {
+            background-color: var(--header-bg);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        header h1 {
+            margin-bottom: 1rem;
+        }
+        
+        /* Table of Contents styles */
+        .sidebar {
+            width: 300px;
+            background-color: var(--toc-bg);
+            padding: 2rem 1rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            border-left: 1px solid var(--border-color);
+        }
+        
+        /* Content styles */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        /* Typography styles */
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        h4 {
+            color: var(--accent-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.2rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        /* Link styles */
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+        
+        /* TOC styles */
+        .toc {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .toc li a {
+            display: block;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .toc li a:hover {
+            background-color: rgba(66, 133, 244, 0.1);
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+        
+        .toc-sub {
+            list-style-type: none;
+            margin-right: 1.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Code block styles */
+        pre {
+            background-color: var(--code-bg);
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            direction: ltr;
+            text-align: left;
+            border: 1px solid var(--code-border);
+        }
+        
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #333;
+        }
+        
+        /* Section styles */
+        .section {
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+        
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            text-align: right;
+        }
+        
+        th {
+            background-color: var(--toc-bg);
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--light-bg);
+        }
+        
+        /* List styles */
+        ul, ol {
+            margin: 1rem 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-left: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .content {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            h3 {
+                font-size: 1.2rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+        }
+        
+        code {
+            font-family: 'Courier New', monospace;
+            background-color: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            direction: ltr;
+            display: inline-block;
+        }
+        
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            direction: ltr;
+        }
+        
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            display: block;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+        }
+        
+        th {
+            background-color: var(--light-bg);
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+        }
+        
+        blockquote {
+            border-right: 4px solid var(--primary-color);
+            padding-right: 1rem;
+            margin-right: 0;
+            margin-left: 0;
+            margin-bottom: 1.5rem;
+            background-color: var(--light-bg);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>آموزش مهندسی پرامپت (Prompt Engineering)</h1>
+        <p>راهنمای جامع برای استفاده موثر از مدل‌های زبانی بزرگ</p>
+    </header>
+    
+    <div class="container">
+        <div class="sidebar">
+            <h2>فهرست مطالب</h2>
+            <ul class="toc">
+                <li><a href="#مقدمه">1. مقدمه</a></li>
+                <li><a href="#مفهوم-مهندسی-پرامپت">2. مفهوم مهندسی پرامپت</a></li>
+                <li>
+                    <a href="#تنظیمات-خروجی-مدلهای-زبانی-بزرگ">3. تنظیمات خروجی مدل‌های زبانی بزرگ</a>
+                    <ul class="toc-sub">
+                        <li><a href="#طول-خروجی">طول خروجی</a></li>
+                        <li><a href="#کنترلهای-نمونهبرداری">کنترل‌های نمونه‌برداری</a></li>
+                        <li><a href="#دما-temperature">دما (Temperature)</a></li>
+                        <li><a href="#top-k-و-top-p">Top-K و Top-P</a></li>
+                        <li><a href="#ترکیب-تنظیمات">ترکیب تنظیمات</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#تکنیکهای-مهندسی-پرامپت">4. تکنیک‌های مهندسی پرامپت</a>
+                    <ul class="toc-sub">
+                        <li><a href="#پرامپت-صفر-شات-zero-shot">پرامپت صفر-شات (Zero-shot)</a></li>
+                        <li><a href="#پرامپت-تک-شات-و-چند-شات-one-shot--few-shot">پرامپت تک-شات و چند-شات (One-shot & Few-shot)</a></li>
+                        <li><a href="#پرامپت-سیستمی-system-prompting">پرامپت سیستمی (System Prompting)</a></li>
+                        <li><a href="#پرامپت-نقش-role-prompting">پرامپت نقش (Role Prompting)</a></li>
+                        <li><a href="#پرامپت-زمینهای-contextual-prompting">پرامپت زمینه‌ای (Contextual Prompting)</a></li>
+                        <li><a href="#پرامپت-قدم-به-عقب-step-back-prompting">پرامپت قدم به عقب (Step-back Prompting)</a></li>
+                        <li><a href="#زنجیره-تفکر-chain-of-thought">زنجیره تفکر (Chain of Thought)</a></li>
+                        <li><a href="#خودسازگاری-self-consistency">خودسازگاری (Self-consistency)</a></li>
+                        <li><a href="#درخت-تفکرات-tree-of-thoughts">درخت تفکرات (Tree of Thoughts)</a></li>
+                        <li><a href="#واکنش-react">واکنش (ReAct)</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#پرامپت-برای-کدنویسی">5. پرامپت برای کدنویسی</a>
+                    <ul class="toc-sub">
+                        <li><a href="#نوشتن-کد">نوشتن کد</a></li>
+                        <li><a href="#توضیح-کد">توضیح کد</a></li>
+                        <li><a href="#ترجمه-کد">ترجمه کد</a></li>
+                        <li><a href="#اشکالزدایی-و-بررسی-کد">اشکال‌زدایی و بررسی کد</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#بهترین-شیوههای-مهندسی-پرامپت">6. بهترین شیوه‌های مهندسی پرامپت</a>
+                    <ul class="toc-sub">
+                        <li><a href="#ارائه-مثالها">ارائه مثال‌ها</a></li>
+                        <li><a href="#طراحی-با-سادگی">طراحی با سادگی</a></li>
+                        <li><a href="#مشخص-کردن-خروجی">مشخص کردن خروجی</a></li>
+                        <li><a href="#استفاده-از-دستورالعملها-به-جای-محدودیتها">استفاده از دستورالعمل‌ها به جای محدودیت‌ها</a></li>
+                        <li><a href="#کنترل-طول-توکن">کنترل طول توکن</a></li>
+                        <li><a href="#استفاده-از-متغیرها-در-پرامپتها">استفاده از متغیرها در پرامپت‌ها</a></li>
+                        <li><a href="#آزمایش-با-فرمتهای-ورودی-و-سبکهای-نوشتاری">آزمایش با فرمت‌های ورودی و سبک‌های نوشتاری</a></li>
+                        <li><a href="#مستندسازی-تلاشهای-مختلف-پرامپت">مستندسازی تلاش‌های مختلف پرامپت</a></li>
+                    </ul>
+                </li>
+                <li><a href="#نمونه-کاربردهای-عملی">7. نمونه کاربردهای عملی</a></li>
+                <li><a href="#جمعبندی">8. جمع‌بندی</a></li>
+            </ul>
+        </div>
+        
+        <div class="content">
+            <!-- Content will be filled in the next step -->
+            <div id="مقدمه" class="section">
+                <h2>1. مقدمه</h2>
+                <p>هنگام فکر کردن درباره ورودی و خروجی یک مدل زبانی بزرگ (LLM)، یک پرامپت متنی (که گاهی با سایر مدالیته‌ها مانند پرامپت‌های تصویری همراه است) ورودی‌ای است که مدل برای پیش‌بینی یک خروجی خاص استفاده می‌کند. شما نیازی نیست یک دانشمند داده یا مهندس یادگیری ماشین باشید - هر کسی می‌تواند یک پرامپت بنویسد. با این حال، ساخت موثرترین پرامپت می‌تواند پیچیده باشد. جنبه‌های مختلفی از پرامپت شما بر کارآمدی آن تأثیر می‌گذارد: مدلی که استفاده می‌کنید، داده‌های آموزشی مدل، تنظیمات مدل، انتخاب کلمات شما، سبک و لحن، ساختار و زمینه همگی مهم هستند. بنابراین، مهندسی پرامپت یک فرآیند تکراری است. پرامپت‌های نامناسب می‌توانند منجر به پاسخ‌های مبهم و نادرست شوند و می‌توانند توانایی مدل برای ارائه خروجی معنادار را مختل کنند.</p>
+                
+                <p>وقتی با چت‌بات Gemini صحبت می‌کنید، اساساً پرامپت‌ها را می‌نویسید، اما این مقاله بر نوشتن پرامپت‌ها برای مدل Gemini در Vertex AI یا با استفاده از API تمرکز دارد، زیرا با پرامپت کردن مستقیم مدل، شما به تنظیمات مانند دما و غیره دسترسی خواهید داشت.</p>
+                
+                <p>این مقاله به طور مفصل درباره مهندسی پرامپت بحث می‌کند. ما به تکنیک‌های مختلف پرامپت نگاه خواهیم کرد تا به شما در شروع کار کمک کنیم و نکات و بهترین شیوه‌ها را به اشتراک می‌گذاریم تا یک متخصص پرامپت شوید. همچنین برخی از چالش‌هایی که ممکن است هنگام ساخت پرامپت‌ها با آن‌ها مواجه شوید را بررسی خواهیم کرد.</p>
+            </div>
+            
+            <div id="مفهوم-مهندسی-پرامپت" class="section">
+                <h2>2. مفهوم مهندسی پرامپت</h2>
+                <p>به یاد داشته باشید که یک LLM چگونه کار می‌کند؛ این یک موتور پیش‌بینی است. مدل متن متوالی را به عنوان ورودی می‌گیرد و سپس پیش‌بینی می‌کند که توکن بعدی چه باید باشد، بر اساس داده‌هایی که با آن‌ها آموزش دیده است. LLM برای انجام این کار بارها و بارها عملیاتی می‌شود، با افزودن توکن پیش‌بینی شده قبلی به انتهای متن متوالی برای پیش‌بینی توکن بعدی. پیش‌بینی توکن بعدی بر اساس رابطه بین آنچه در توکن‌های قبلی است و آنچه LLM در طول آموزش خود دیده است، انجام می‌شود.</p>
+                
+                <p>وقتی یک پرامپت می‌نویسید، در تلاش هستید تا LLM را برای پیش‌بینی توالی درست توکن‌ها تنظیم کنید. مهندسی پرامپت فرآیند طراحی پرامپت‌های با کیفیت بالا است که LLM‌ها را برای تولید خروجی‌های دقیق هدایت می‌کند. این فرآیند شامل آزمایش برای یافتن بهترین پرامپت، بهینه‌سازی طول پرامپت و ارزیابی سبک نوشتاری و ساختار یک پرامپت در رابطه با وظیفه است. در زمینه پردازش زبان طبیعی و LLM‌ها، یک پرامپت ورودی‌ای است که به مدل ارائه می‌شود تا پاسخ یا پیش‌بینی را تولید کند.</p>
+                
+                <p>این پرامپت‌ها می‌توانند برای دستیابی به انواع مختلفی از وظایف درک و تولید مانند خلاصه‌سازی متن، استخراج اطلاعات، پرسش و پاسخ، طبقه‌بندی متن، ترجمه زبان یا کد، تولید کد و مستندسازی کد یا استدلال استفاده شوند.</p>
+                
+                <p>لطفاً به راهنماهای پرامپت Google با مثال‌های ساده و موثر پرامپت مراجعه کنید.</p>
+                
+                <p>هنگام مهندسی پرامپت، با انتخاب یک مدل شروع خواهید کرد. ممکن است نیاز باشد پرامپت‌ها برای مدل خاص شما بهینه شوند، صرف نظر از اینکه از مدل‌های زبانی Gemini در Vertex AI، GPT، Claude یا یک مدل منبع باز مانند Gemma یا LLaMA استفاده می‌کنید.</p>
+                
+                <p>علاوه بر پرامپت، شما همچنین نیاز به آزمایش با تنظیمات مختلف یک LLM خواهید داشت.</p>
+            </div>
+            
+            <div id="تنظیمات-خروجی-مدلهای-زبانی-بزرگ" class="section">
+                <h2>3. تنظیمات خروجی مدل‌های زبانی بزرگ</h2>
+                <p>پس از انتخاب مدل، باید تنظیمات مدل را مشخص کنید. اکثر LLM‌ها با گزینه‌های تنظیم مختلفی ارائه می‌شوند که خروجی LLM را کنترل می‌کنند. مهندسی پرامپت موثر نیازمند تنظیم بهینه این پیکربندی‌ها برای وظیفه شما است.</p>
+                
+                <div id="طول-خروجی" class="section">
+                    <h3>طول خروجی</h3>
+                    <p>یک تنظیم مهم، تعداد توکن‌هایی است که در یک پاسخ تولید می‌شوند. تولید توکن‌های بیشتر نیازمند محاسبات بیشتری از LLM است، که منجر به مصرف انرژی بالاتر، زمان‌های پاسخ احتمالاً کندتر و هزینه‌های بالاتر می‌شود.</p>
+                    
+                    <p>کاهش طول خروجی LLM باعث نمی‌شود که LLM از نظر سبک یا متنی در خروجی که ایجاد می‌کند مختصرتر شود، فقط باعث می‌شود که LLM پس از رسیدن به محدودیت، پیش‌بینی توکن‌های بیشتر را متوقف کند. اگر نیازهای شما به طول خروجی کوتاه نیاز دارد، احتمالاً باید پرامپت خود را نیز برای تطبیق با آن مهندسی کنید.</p>
+                    
+                    <p>محدودیت طول خروجی به ویژه برای برخی از تکنیک‌های پرامپت LLM، مانند ReAct، مهم است، جایی که LLM پس از پاسخی که می‌خواهید، به انتشار توکن‌های بی‌فایده ادامه خواهد داد.</p>
+                    
+                    <p>توجه داشته باشید، تولید توکن‌های بیشتر نیازمند محاسبات بیشتری از LLM است، که منجر به مصرف انرژی بالاتر و زمان‌های پاسخ احتمالاً کندتر می‌شود، که منجر به هزینه‌های بالاتر می‌شود.</p>
+                </div>
+                
+                <div id="کنترلهای-نمونهبرداری" class="section">
+                    <h3>کنترل‌های نمونه‌برداری</h3>
+                    <p>LLM‌ها رسماً یک توکن واحد را پیش‌بینی نمی‌کنند. در عوض، LLM‌ها احتمالات را برای اینکه توکن بعدی چه می‌تواند باشد پیش‌بینی می‌کنند، با هر توکن در واژگان LLM که یک احتمال دریافت می‌کند. سپس از آن احتمالات توکن نمونه‌برداری می‌شود تا مشخص شود توکن بعدی تولید شده چه خواهد بود.</p>
+                    
+                    <p>دما (Temperature)، Top-K و Top-P رایج‌ترین تنظیمات پیکربندی هستند که تعیین می‌کنند چگونه احتمالات توکن پیش‌بینی شده برای انتخاب یک توکن خروجی واحد پردازش می‌شوند.</p>
+                </div>
+                
+                <div id="دما-temperature" class="section">
+                    <h3>دما (Temperature)</h3>
+                    <p>دما درجه تصادفی بودن در انتخاب توکن را کنترل می‌کند. دماهای پایین‌تر برای پرامپت‌هایی که انتظار پاسخ قطعی‌تری دارند مناسب هستند، در حالی که دماهای بالاتر می‌توانند منجر به نتایج متنوع‌تر یا غیرمنتظره شوند. دمای 0 (رمزگشایی حریصانه) قطعی است: توکن با بالاترین احتمال همیشه انتخاب می‌شود (اگرچه توجه داشته باشید که اگر دو توکن دارای همان بالاترین احتمال پیش‌بینی شده باشند، بسته به نحوه پیاده‌سازی شکستن تساوی، ممکن است همیشه با دمای 0 خروجی یکسانی دریافت نکنید).</p>
+                    
+                    <p>دماهای نزدیک به حداکثر تمایل به ایجاد خروجی تصادفی‌تر دارند. و همانطور که دما بالاتر و بالاتر می‌رود، همه توکن‌ها به طور یکسان احتمال دارند که توکن پیش‌بینی شده بعدی باشند.</p>
+                    
+                    <p>کنترل دمای Gemini را می‌توان به روشی مشابه با تابع softmax که در یادگیری ماشین استفاده می‌شود درک کرد. تنظیم دمای پایین، دمای پایین softmax (T) را منعکس می‌کند، که بر یک دمای ترجیحی واحد با قطعیت بالا تأکید می‌کند. تنظیم دمای بالاتر Gemini مانند دمای بالای softmax است، که طیف وسیع‌تری از دماها در اطراف تنظیم انتخاب شده را قابل قبول‌تر می‌کند. این عدم قطعیت افزایش یافته، سناریوهایی را در نظر می‌گیرد که در آن یک دمای دقیق و سختگیرانه ممکن است ضروری نباشد، مانند زمانی که با خروجی‌های خلاقانه آزمایش می‌کنید.</p>
+                </div>
+                
+                <div id="top-k-و-top-p" class="section">
+                    <h3>Top-K و Top-P</h3>
+                    <p>Top-K و Top-P (همچنین به عنوان نمونه‌برداری هسته شناخته می‌شود) دو تنظیم نمونه‌برداری هستند که در LLM‌ها استفاده می‌شوند تا توکن بعدی پیش‌بینی شده را از توکن‌هایی با بالاترین احتمالات پیش‌بینی شده محدود کنند. مانند دما، این تنظیمات نمونه‌برداری، تصادفی بودن و تنوع متن تولید شده را کنترل می‌کنند.</p>
+                    
+                    <p>• نمونه‌برداری Top-K، K توکن با بیشترین احتمال را از توزیع پیش‌بینی شده مدل انتخاب می‌کند. هرچه Top-K بالاتر باشد، خروجی مدل خلاقانه‌تر و متنوع‌تر است؛ هرچه Top-K پایین‌تر باشد، خروجی مدل محدودتر و واقعی‌تر است. Top-K برابر با 1 معادل رمزگشایی حریصانه است.</p>
+                    
+                    <p>• نمونه‌برداری Top-P، توکن‌های برتری را انتخاب می‌کند که احتمال تجمعی آن‌ها از یک مقدار خاص (P) تجاوز نکند. مقادیر برای P از 0 (رمزگشایی حریصانه) تا 1 (تمام توکن‌ها در واژگان LLM) متغیر است.</p>
+                    
+                    <p>بهترین راه برای انتخاب بین Top-K و Top-P، آزمایش با هر دو روش (یا هر دو با هم) و دیدن اینکه کدام یک نتایجی را که به دنبال آن هستید تولید می‌کند.</p>
+                </div>
+                
+                <div id="ترکیب-تنظیمات" class="section">
+                    <h3>ترکیب تنظیمات</h3>
+                    <p>انتخاب بین Top-K، Top-P، دما و تعداد توکن‌هایی که باید تولید شوند، به کاربرد خاص و نتیجه مورد نظر بستگی دارد، و تنظیمات همگی بر یکدیگر تأثیر می‌گذارند. همچنین مهم است که مطمئن شوید درک می‌کنید که مدل انتخابی شما چگونه تنظیمات نمونه‌برداری مختلف را با هم ترکیب می‌کند.</p>
+                    
+                    <p>اگر دما، Top-K و Top-P همگی در دسترس باشند (مانند Vertex Studio)، توکن‌هایی که هم معیارهای Top-K و هم Top-P را برآورده می‌کنند، نامزدهایی برای توکن پیش‌بینی شده بعدی هستند، و سپس دما برای نمونه‌برداری از توکن‌هایی که از معیارهای Top-K و Top-P عبور کرده‌اند اعمال می‌شود. اگر فقط Top-K یا Top-P در دسترس باشد، رفتار یکسان است اما فقط از یک تنظیم Top-K یا P استفاده می‌شود.</p>
+                    
+                    <p>اگر دما در دسترس نباشد، از هر توکنی که معیارهای Top-K و/یا Top-P را برآورده می‌کند، به صورت تصادفی انتخاب می‌شود تا یک توکن پیش‌بینی شده بعدی واحد تولید شود.</p>
+                    
+                    <p>در تنظیمات افراطی یک مقدار پیکربندی نمونه‌برداری، آن تنظیم نمونه‌برداری یا تنظیمات پیکربندی دیگر را لغو می‌کند یا بی‌اهمیت می‌شود.</p>
+                    
+                    <p>• اگر دما را روی 0 تنظیم کنید، Top-K و Top-P بی‌اهمیت می‌شوند - توکن با بیشترین احتمال، توکن پیش‌بینی شده بعدی می‌شود. اگر دما را به شدت بالا تنظیم کنید (بالای 1 - عموماً به 10ها)، دما بی‌اهمیت می‌شود و از هر توکنی که از معیارهای Top-K و/یا Top-P عبور می‌کند، به صورت تصادفی نمونه‌برداری می‌شود تا یک توکن پیش‌بینی شده بعدی انتخاب شود.</p>
+                    
+                    <p>• اگر Top-K را روی 1 تنظیم کنید، دما و Top-P بی‌اهمیت می‌شوند. فقط یک توکن از معیارهای Top-K عبور می‌کند، و آن توکن، توکن پیش‌بینی شده بعدی است. اگر Top-K را به شدت بالا تنظیم کنید، مانند اندازه واژگان LLM، هر توکن با احتمال غیر صفر برای اینکه توکن بعدی باشد، معیارهای Top-K را برآورده می‌کند و هیچ کدام انتخاب نمی‌شوند.</p>
+                    
+                    <p>• اگر Top-P را روی 0 (یا یک مقدار بسیار کوچک) تنظیم کنید، اکثر پیاده‌سازی‌های نمونه‌برداری LLM فقط توکن با بیشترین احتمال را در نظر می‌گیرند تا معیارهای Top-P را برآورده کند، که دما و Top-K را بی‌اهمیت می‌کند. اگر Top-P را روی 1 تنظیم کنید، هر توکن با احتمال غیر صفر برای اینکه توکن بعدی باشد، معیارهای Top-P را برآورده می‌کند، و هیچ کدام انتخاب نمی‌شوند.</p>
+                    
+                    <p>به عنوان یک نقطه شروع کلی، دمای 0.2، Top-P برابر با 0.95 و Top-K برابر با 30 به شما نتایج نسبتاً منسجمی می‌دهد که می‌تواند خلاقانه باشد اما نه به طور افراطی. اگر می‌خواهید نتایج به ویژه خلاقانه‌ای داشته باشید، سعی کنید با دمای 0.9، Top-P برابر با 0.99 و Top-K برابر با 40 شروع کنید. و اگر می‌خواهید نتایج کمتر خلاقانه‌ای داشته باشید، سعی کنید با دمای 0.1، Top-P برابر با 0.9 و Top-K برابر با 20 شروع کنید. در نهایت، اگر وظیفه شما همیشه یک پاسخ صحیح واحد دارد (مثلاً، پاسخ به یک مسئله ریاضی)، با دمای 0 شروع کنید.</p>
+                    
+                    <p>توجه: با آزادی بیشتر (دما، Top-K، Top-P و توکن‌های خروجی بالاتر)، LLM ممکن است متنی تولید کند که کمتر مرتبط است.</p>
+                    
+                    <p>هشدار: آیا تا به حال پاسخی را دیده‌اید که با مقدار زیادی کلمات پرکننده به پایان برسد؟ این همچنین به عنوان "باگ حلقه تکرار" شناخته می‌شود، که یک مشکل رایج در مدل‌های زبانی بزرگ است که در آن مدل در یک چرخه گیر می‌کند، به طور مکرر همان کلمه (پرکننده)، عبارت یا ساختار جمله را تولید می‌کند، که اغلب با تنظیمات نامناسب دما و top-k/top-p تشدید می‌شود. این می‌تواند هم در تنظیمات دمای پایین و هم بالا رخ دهد، اگرچه به دلایل مختلف. در دماهای پایین، مدل بیش از حد قطعی می‌شود، به شدت به مسیر با بالاترین احتمال می‌چسبد، که می‌تواند منجر به یک حلقه شود اگر آن مسیر به متن تولید شده قبلی بازگردد. برعکس، در دماهای بالا، خروجی مدل بیش از حد تصادفی می‌شود، احتمال اینکه یک کلمه یا عبارت انتخاب شده به طور تصادفی، به شانس، به یک حالت قبلی بازگردد را افزایش می‌دهد، که به دلیل تعداد زیاد گزینه‌های موجود، یک حلقه ایجاد می‌کند. در هر دو مورد، فرآیند نمونه‌برداری مدل "گیر می‌کند"، که منجر به خروجی یکنواخت و بی‌فایده می‌شود تا زمانی که پنجره خروجی پر شود. حل این مشکل اغلب نیازمند تنظیم دقیق مقادیر دما و top-k/top-p برای یافتن تعادل بهینه بین قطعیت و تصادفی بودن است.</p>
+                </div>
+            </div>
+            
+            <div id="تکنیکهای-مهندسی-پرامپت" class="section">
+                <h2>4. تکنیک‌های مهندسی پرامپت</h2>
+                <p>مدل‌های زبانی بزرگ (LLM) برای پیروی از دستورالعمل‌ها تنظیم شده‌اند و روی مقادیر زیادی از داده‌ها آموزش دیده‌اند تا بتوانند یک پرامپت را درک کنند و پاسخی تولید کنند. اما LLM‌ها کامل نیستند؛ هرچه متن پرامپت شما واضح‌تر باشد، برای LLM بهتر است تا متن بعدی محتمل را پیش‌بینی کند. علاوه بر این، تکنیک‌های خاصی که از نحوه آموزش LLM‌ها و نحوه کار آن‌ها استفاده می‌کنند، به شما کمک می‌کنند تا نتایج مرتبط را از LLM‌ها دریافت کنید.</p>
+                
+                <p>حال که درک می‌کنیم مهندسی پرامپت چیست و چه چیزی نیاز دارد، بیایید به برخی از مثال‌های مهم‌ترین تکنیک‌های پرامپت بپردازیم.</p>
+                
+                <div id="پرامپت-صفر-شات-zero-shot" class="section">
+                    <h3>پرامپت صفر-شات (Zero-shot)</h3>
+                    <p>یک پرامپت صفر-شات ساده‌ترین نوع پرامپت است. این فقط توصیفی از یک وظیفه و برخی متن‌ها را برای شروع کار LLM ارائه می‌دهد. این ورودی می‌تواند هر چیزی باشد: یک سؤال، شروع یک داستان، یا دستورالعمل‌ها. نام صفر-شات به معنای 'بدون مثال' است.</p>
+                    
+                    <p>بیایید از Vertex AI Studio (برای زبان) در Vertex AI استفاده کنیم، که یک محیط آزمایشی برای تست پرامپت‌ها ارائه می‌دهد. در جدول 1، یک مثال پرامپت صفر-شات برای طبقه‌بندی نقدهای فیلم خواهید دید.</p>
+                    
+                    <p>فرمت جدول که در زیر استفاده شده است، روش عالی برای مستندسازی پرامپت‌ها است. پرامپت‌های شما احتمالاً قبل از اینکه در یک کد قرار بگیرند، از چندین تکرار عبور خواهند کرد، بنابراین مهم است که کار مهندسی پرامپت خود را به روشی منظم و ساختاریافته پیگیری کنید. اطلاعات بیشتر در مورد این فرمت جدول، اهمیت پیگیری کار مهندسی پرامپت و فرآیند توسعه پرامپت در بخش بهترین شیوه‌ها در ادامه این فصل ("مستندسازی تلاش‌های مختلف پرامپت") آمده است.</p>
+                    
+                    <p>دمای مدل باید روی عدد پایینی تنظیم شود، زیرا نیازی به خلاقیت نیست، و ما از مقادیر پیش‌فرض Top-K و Top-P مدل gemini-pro استفاده می‌کنیم، که به طور مؤثر هر دو تنظیم را غیرفعال می‌کند (به 'تنظیمات خروجی LLM' در بالا مراجعه کنید). به خروجی تولید شده توجه کنید. کلمات "disturbing" و "masterpiece" باید پیش‌بینی را کمی پیچیده‌تر کنند، زیرا هر دو کلمه در یک جمله استفاده شده‌اند.</p>
+                    
+                    <p><strong>مثال پرامپت صفر-شات:</strong></p>
+                    
+                    <pre><code>Classify movie reviews as POSITIVE, NEUTRAL or NEGATIVE.
+Review: "Her" is a disturbing study revealing the direction humanity is headed if AI is allowed to keep evolving, unchecked. I wish there were more movies like this masterpiece.
+Sentiment:</code></pre>
+                    
+                    <p><strong>خروجی:</strong></p>
+                    <pre><code>POSITIVE</code></pre>
+                    
+                    <p>وقتی صفر-شات کار نمی‌کند، می‌توانید نمونه‌ها یا مثال‌هایی را در پرامپت ارائه دهید، که منجر به پرامپت "تک-شات" و "چند-شات" می‌شود.</p>
+                </div>
+                
+                <div id="پرامپت-تک-شات-و-چند-شات-one-shot--few-shot" class="section">
+                    <h3>پرامپت تک-شات و چند-شات (One-shot & Few-shot)</h3>
+                    <p>هنگام ایجاد پرامپت‌ها برای مدل‌های هوش مصنوعی، ارائه مثال‌ها مفید است. این مثال‌ها می‌توانند به مدل کمک کنند تا آنچه را که از آن می‌خواهید درک کند. مثال‌ها به ویژه زمانی مفید هستند که می‌خواهید مدل را به سمت یک ساختار یا الگوی خروجی خاص هدایت کنید.</p>
+                    
+                    <p>یک پرامپت تک-شات، یک مثال واحد ارائه می‌دهد، از این رو نام تک-شات. ایده این است که مدل مثالی دارد که می‌تواند از آن تقلید کند تا بهترین عملکرد را در انجام وظیفه داشته باشد.</p>
+                    
+                    <p>یک پرامپت چند-شات چندین مثال ارائه می‌دهد. این به مدل کمک می‌کند تا الگوها را بهتر درک کند و پاسخ‌های دقیق‌تری تولید کند.</p>
+                    
+                    <p><strong>مثال پرامپت تک-شات:</strong></p>
+                    
+                    <pre><code>Classify movie reviews as POSITIVE, NEUTRAL or NEGATIVE.
+
+Review: The movie was entertaining with great special effects, but the plot was predictable.
+Sentiment: NEUTRAL
+
+Review: "Her" is a disturbing study revealing the direction humanity is headed if AI is allowed to keep evolving, unchecked. I wish there were more movies like this masterpiece.
+Sentiment:</code></pre>
+                    
+                    <p><strong>خروجی:</strong></p>
+                    <pre><code>POSITIVE</code></pre>
+                    
+                    <p><strong>مثال پرامپت چند-شات:</strong></p>
+                    
+                    <pre><code>Classify movie reviews as POSITIVE, NEUTRAL or NEGATIVE.
+
+Review: The movie was entertaining with great special effects, but the plot was predictable.
+Sentiment: NEUTRAL
+
+Review: This film is an absolute waste of time with terrible acting and a nonsensical story.
+Sentiment: NEGATIVE
+
+Review: I was completely blown away by this masterpiece. The direction, acting, and screenplay were all perfect.
+Sentiment: POSITIVE
+
+Review: "Her" is a disturbing study revealing the direction humanity is headed if AI is allowed to keep evolving, unchecked. I wish there were more movies like this masterpiece.
+Sentiment:</code></pre>
+                    
+                    <p><strong>خروجی:</strong></p>
+                    <pre><code>POSITIVE</code></pre>
+                </div>
+                
+                <div id="پرامپت-سیستمی-system-prompting" class="section">
+                    <h3>پرامپت سیستمی (System Prompting)</h3>
+                    <p>پرامپت سیستمی یک روش برای تنظیم رفتار کلی مدل است. این به شما اجازه می‌دهد تا به مدل بگویید چه نوع دستیاری باشد، چگونه پاسخ دهد، و چه محدودیت‌هایی داشته باشد.</p>
+                    
+                    <p><strong>مثال پرامپت سیستمی:</strong></p>
+                    
+                    <pre><code>You are a helpful, concise assistant that specializes in explaining complex technical concepts in simple terms. Your responses should be accurate but easy to understand for non-technical users.
+
+User: Explain how large language models work.</code></pre>
+                </div>
+                
+                <div id="پرامپت-نقش-role-prompting" class="section">
+                    <h3>پرامپت نقش (Role Prompting)</h3>
+                    <p>در پرامپت نقش، از مدل می‌خواهید نقش خاصی را بپذیرد. این می‌تواند به تولید پاسخ‌های تخصصی‌تر و متمرکزتر کمک کند.</p>
+                    
+                    <p><strong>مثال پرامپت نقش:</strong></p>
+                    
+                    <pre><code>Act as an experienced software developer specializing in Python. Review the following code and suggest improvements for readability and performance:
+
+def process_data(data_list):
+    result = []
+    for i in range(len(data_list)):
+        if data_list[i] % 2 == 0:
+            result.append(data_list[i] * 2)
+        else:
+            result.append(data_list[i] * 3)
+    return result</code></pre>
+                </div>
+                
+                <div id="پرامپت-زمینهای-contextual-prompting" class="section">
+                    <h3>پرامپت زمینه‌ای (Contextual Prompting)</h3>
+                    <p>پرامپت زمینه‌ای شامل ارائه اطلاعات زمینه‌ای اضافی به مدل است تا به آن کمک کند پاسخ‌های دقیق‌تر و مرتبط‌تری تولید کند.</p>
+                    
+                    <p><strong>مثال پرامپت زمینه‌ای:</strong></p>
+                    
+                    <pre><code>Context: The company XYZ Corp has recently launched a new product line of eco-friendly household cleaners. The target market is environmentally conscious consumers aged 25-45. The company wants to expand its online presence.
+
+Task: Create a social media marketing strategy for XYZ Corp's new product line.</code></pre>
+                </div>
+                
+                <div id="پرامپت-قدم-به-عقب-step-back-prompting" class="section">
+                    <h3>پرامپت قدم به عقب (Step-back Prompting)</h3>
+                    <p>پرامپت قدم به عقب یک تکنیک است که در آن از مدل خواسته می‌شود قبل از پرداختن به مسئله اصلی، یک قدم به عقب بردارد و مسئله را در یک سطح انتزاعی‌تر بررسی کند.</p>
+                    
+                    <p><strong>مثال پرامپت قدم به عقب:</strong></p>
+                    
+                    <pre><code>Question: What will happen if we continue to burn fossil fuels at the current rate?
+
+Before answering directly, take a step back and consider:
+1. What are fossil fuels and how do they affect the environment?
+2. What are the current rates of fossil fuel consumption globally?
+3. What scientific consensus exists about the long-term effects?
+
+Now, provide a comprehensive answer to the original question.</code></pre>
+                </div>
+                
+                <div id="زنجیره-تفکر-chain-of-thought" class="section">
+                    <h3>زنجیره تفکر (Chain of Thought)</h3>
+                    <p>زنجیره تفکر (CoT) یک تکنیک است که در آن از مدل خواسته می‌شود استدلال خود را قدم به قدم نشان دهد. این به ویژه برای مسائل پیچیده مفید است.</p>
+                    
+                    <p><strong>مثال زنجیره تفکر:</strong></p>
+                    
+                    <pre><code>Solve this problem step by step:
+If John has 5 apples and gives 2 to Mary, then buys 3 more apples and gives half of all his apples to Tom, how many apples does John have left?</code></pre>
+                </div>
+                
+                <div id="خودسازگاری-self-consistency" class="section">
+                    <h3>خودسازگاری (Self-consistency)</h3>
+                    <p>خودسازگاری یک تکنیک است که در آن از مدل خواسته می‌شود چندین مسیر استدلال را برای یک مسئله در نظر بگیرد و سپس پاسخی را انتخاب کند که بیشترین سازگاری را دارد.</p>
+                    
+                    <p><strong>مثال خودسازگاری:</strong></p>
+                    
+                    <pre><code>Generate three different approaches to solve this problem, then determine which solution is most likely correct:
+
+A store has a 25% off sale. If an item originally costs $80, what is the sale price?
+
+Approach 1:
+
+Approach 2:
+
+Approach 3:
+
+Most consistent answer:</code></pre>
+                </div>
+                
+                <div id="درخت-تفکرات-tree-of-thoughts" class="section">
+                    <h3>درخت تفکرات (Tree of Thoughts)</h3>
+                    <p>درخت تفکرات (ToT) یک گسترش از زنجیره تفکر است که به مدل اجازه می‌دهد چندین مسیر استدلال را کاوش کند و مسیرهای غیرامیدوارکننده را هرس کند.</p>
+                    
+                    <p><strong>مثال درخت تفکرات:</strong></p>
+                    
+                    <pre><code>Solve this puzzle by exploring multiple possible solutions:
+
+You have 8 balls that all look identical. One of them is slightly heavier than the others. Using a balance scale, how can you identify the heavier ball with just 2 weighings?
+
+Let's explore different approaches:
+Approach 1:
+Approach 2:
+Approach 3:
+
+Now, let's evaluate each approach and determine which one is correct.</code></pre>
+                </div>
+                
+                <div id="واکنش-react" class="section">
+                    <h3>واکنش (ReAct)</h3>
+                    <p>واکنش (ReAct) ترکیبی از استدلال و عمل است. مدل بین استدلال درباره یک مسئله و انجام اقدامات برای جمع‌آوری اطلاعات بیشتر تناوب دارد.</p>
+                    
+                    <p><strong>مثال واکنش:</strong></p>
+                    
+                    <pre><code>You are an AI assistant that can reason about problems and take actions to gather more information.
+
+Question: What is the capital of the country where the Pyramids of Giza are located, and what is the population of this capital?
+
+Thought: I need to first identify the country where the Pyramids of Giza are located.
+Action: Search for "location of Pyramids of Giza"
+
+Observation: The Pyramids of Giza are located in Egypt.
+
+Thought: Now I know the Pyramids of Giza are in Egypt. The capital of Egypt is Cairo. Now I need to find the population of Cairo.
+Action: Search for "population of Cairo Egypt"
+
+Observation: The population of Cairo, Egypt is approximately 9.7 million people (2021 estimate).
+
+Answer: The capital of Egypt, where the Pyramids of Giza are located, is Cairo. The population of Cairo is approximately 9.7 million people.</code></pre>
+                </div>
+            </div>
+            
+            <div id="پرامپت-برای-کدنویسی" class="section">
+                <h2>5. پرامپت برای کدنویسی</h2>
+                <p>مدل‌های زبانی بزرگ (LLM) می‌توانند در نوشتن، توضیح، ترجمه و اشکال‌زدایی کد کمک کنند. در این بخش، تکنیک‌های پرامپت مختلف برای کار با کد را بررسی می‌کنیم.</p>
+
+                <div id="نوشتن-کد" class="section">
+                    <h3>نوشتن کد</h3>
+                    <p>هنگام درخواست از LLM برای نوشتن کد، ارائه دستورالعمل‌های واضح و مشخص کردن زبان برنامه‌نویسی مورد نظر مهم است.</p>
+                    
+                    <p><strong>مثال پرامپت برای نوشتن کد:</strong></p>
+                    
+                    <pre><code>Write a Python function that takes a list of numbers as input and returns the sum of all even numbers in the list. Include comments to explain your code.</code></pre>
+                    
+                    <p><strong>خروجی:</strong></p>
+                    <pre><code>def sum_even_numbers(numbers):
+    """
+    Calculate the sum of all even numbers in a list.
+    
+    Args:
+        numbers (list): A list of numbers
+        
+    Returns:
+        int: The sum of all even numbers in the list
+    """
+    # Initialize the sum to zero
+    even_sum = 0
+    
+    # Iterate through each number in the list
+    for num in numbers:
+        # Check if the number is even
+        if num % 2 == 0:
+            # Add the even number to our sum
+            even_sum += num
+    
+    # Return the final sum
+    return even_sum</code></pre>
+                    
+                    <p>برای وظایف پیچیده‌تر، می‌توانید جزئیات بیشتری ارائه دهید:</p>
+                    
+                    <pre><code>Create a Python class for a Bank Account with the following features:
+1. Initialize with account holder name and starting balance
+2. Methods for deposit and withdrawal
+3. A method to calculate interest (assume 2% annual interest)
+4. Error handling for insufficient funds
+5. A method to display the current balance and account details
+
+Use proper documentation and follow PEP 8 style guidelines.</code></pre>
+                </div>
+                
+                <div id="توضیح-کد" class="section">
+                    <h3>توضیح کد</h3>
+                    <p>LLM‌ها می‌توانند در توضیح کد موجود کمک کنند، که برای یادگیری یا مستندسازی مفید است.</p>
+                    
+                    <p><strong>مثال پرامپت برای توضیح کد:</strong></p>
+                    
+                    <pre><code>Explain the following Python code line by line:
+
+def quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quicksort(left) + middle + quicksort(right)</code></pre>
+                </div>
+                
+                <div id="ترجمه-کد" class="section">
+                    <h3>ترجمه کد</h3>
+                    <p>LLM‌ها می‌توانند کد را از یک زبان برنامه‌نویسی به زبان دیگر ترجمه کنند.</p>
+                    
+                    <p><strong>مثال پرامپت برای ترجمه کد:</strong></p>
+                    
+                    <pre><code>Translate the following JavaScript code to Python:
+
+function fibonacci(n) {
+    if (n <= 1) return n;
+    let a = 0, b = 1;
+    for (let i = 2; i <= n; i++) {
+        let temp = a + b;
+        a = b;
+        b = temp;
+    }
+    return b;
+}</code></pre>
+                </div>
+                
+                <div id="اشکالزدایی-و-بررسی-کد" class="section">
+                    <h3>اشکال‌زدایی و بررسی کد</h3>
+                    <p>LLM‌ها می‌توانند در شناسایی و رفع اشکالات در کد کمک کنند.</p>
+                    
+                    <p><strong>مثال پرامپت برای اشکال‌زدایی کد:</strong></p>
+                    
+                    <pre><code>Debug the following Python code that is supposed to find the largest number in a list, but has errors:
+
+def find_largest(numbers):
+    largest = 0
+    for num in numbers:
+        if num > largest:
+            largest = num
+    return largest
+
+# This should return 10, but returns 0
+test = find_largest([-5, -10, -2, -1])</code></pre>
+                </div>
+            </div>
+            
+            <div id="بهترین-شیوههای-مهندسی-پرامپت" class="section">
+                <h2>6. بهترین شیوه‌های مهندسی پرامپت</h2>
+                <p>در این بخش، بهترین شیوه‌ها و نکات کاربردی برای مهندسی پرامپت موثر را بررسی می‌کنیم.</p>
+
+                <div id="ارائه-مثالها" class="section">
+                    <h3>ارائه مثال‌ها</h3>
+                    <p>ارائه مثال‌های واضح می‌تواند به مدل کمک کند تا الگوها را بهتر درک کند و پاسخ‌های دقیق‌تری تولید کند.</p>
+                    
+                    <p><strong>نکته:</strong> برای وظایف پیچیده، از پرامپت چند-شات با مثال‌های متنوع استفاده کنید.</p>
+                    
+                    <pre><code>Translate the following English phrases to French:
+
+English: Hello, how are you?
+French: Bonjour, comment allez-vous?
+
+English: I would like to order a coffee, please.
+French: Je voudrais commander un café, s'il vous plaît.
+
+English: Where is the nearest train station?
+French:</code></pre>
+                
+                <div id="طراحی-با-سادگی" class="section">
+                    <h3>طراحی با سادگی</h3>
+                    <p>پرامپت‌های ساده و مستقیم اغلب بهترین نتایج را تولید می‌کنند. از زبان پیچیده یا دستورالعمل‌های مبهم خودداری کنید.</p>
+                    
+                    <p><strong>بد:</strong></p>
+                    <pre><code>با توجه به اینکه شما یک متخصص در زمینه تحلیل داده هستید و با در نظر گرفتن اهمیت روش‌های آماری در استخراج بینش‌های معنادار از مجموعه داده‌های بزرگ، لطفاً یک توضیح جامع و کامل از مفهوم رگرسیون خطی و کاربردهای آن در تحلیل پیش‌بینی ارائه دهید.</code></pre>
+                    
+                    <p><strong>خوب:</strong></p>
+                    <pre><code>Explain linear regression and its applications in predictive analytics. Keep it simple and clear.</code></pre>
+                </div>
+                
+                <div id="مشخص-کردن-خروجی" class="section">
+                    <h3>مشخص کردن خروجی</h3>
+                    <p>فرمت و ساختار خروجی مورد نظر خود را مشخص کنید.</p>
+                    
+                    <pre><code>Create a 5-day weather forecast for Tokyo. Format the output as a table with columns for Day, Temperature (°C), and Conditions.</code></pre>
+                    <!-- Content placeholder -->
+                </div>
+                
+                <div id="استفاده-از-دستورالعملها-به-جای-محدودیتها" class="section">
+                    <h3>استفاده از دستورالعمل‌ها به جای محدودیت‌ها</h3>
+                    <p>به جای گفتن اینکه مدل چه کاری نکند، به آن بگویید چه کاری انجام دهد.</p>
+                    
+                    <p><strong>بد:</strong></p>
+                    <pre><code>Write a product description for a smartphone. Don't make it boring or too technical. Don't use clichés.</code></pre>
+                    
+                    <p><strong>خوب:</strong></p>
+                    <pre><code>Write an engaging product description for a smartphone that highlights its unique features in simple, creative language that would appeal to everyday users.</code></pre>
+                </div>
+                
+                <div id="کنترل-طول-توکن" class="section">
+                    <h3>کنترل طول توکن</h3>
+                    <p>برای کنترل طول پاسخ، محدودیت‌های خاصی را مشخص کنید.</p>
+                    
+                    <pre><code>Summarize the history of artificial intelligence in exactly 3 paragraphs.</code></pre>
+                </div>
+                
+                <div id="استفاده-از-متغیرها-در-پرامپتها" class="section">
+                    <h3>استفاده از متغیرها در پرامپت‌ها</h3>
+                    <p>برای پرامپت‌های قابل استفاده مجدد، از متغیرها استفاده کنید که می‌توانند با مقادیر مختلف جایگزین شوند.</p>
+                    
+                    <pre><code>Analyze the sentiment of the following text as positive, negative, or neutral:
+{{TEXT}}</code></pre>
+                    <!-- Content placeholder -->
+                </div>
+                
+                <div id="آزمایش-با-فرمتهای-ورودی-و-سبکهای-نوشتاری" class="section">
+                    <h3>آزمایش با فرمت‌های ورودی و سبک‌های نوشتاری</h3>
+                    <p>فرمت‌های مختلف پرامپت را آزمایش کنید تا ببینید کدام یک بهترین نتایج را تولید می‌کند.</p>
+                    
+                    <p><strong>فرمت 1: سوال مستقیم</strong></p>
+                    <pre><code>What are the main causes of climate change?</code></pre>
+                    
+                    <p><strong>فرمت 2: درخواست لیست</strong></p>
+                    <pre><code>List the top 5 main causes of climate change.</code></pre>
+                    
+                    <p><strong>فرمت 3: نقش و فرمت</strong></p>
+                    <pre><code>As an environmental scientist, explain the main causes of climate change. Structure your answer with an introduction, main points with evidence, and a conclusion.</code></pre>
+                </div>
+                
+                <div id="مستندسازی-تلاشهای-مختلف-پرامپت" class="section">
+                    <h3>مستندسازی تلاش‌های مختلف پرامپت</h3>
+                    <p>پرامپت‌های خود و نتایج آن‌ها را مستند کنید تا بتوانید آنچه کار می‌کند و آنچه کار نمی‌کند را پیگیری کنید.</p>
+                    
+                    <p><strong>نمونه جدول مستندسازی:</strong></p>
+                    
+                    <table>
+                        <tr>
+                            <th>نام پرامپت</th>
+                            <th>هدف</th>
+                            <th>مدل</th>
+                            <th>دما</th>
+                            <th>پرامپت</th>
+                            <th>خروجی</th>
+                            <th>نتیجه</th>
+                        </tr>
+                        <tr>
+                            <td>طبقه‌بندی احساسات v1</td>
+                            <td>طبقه‌بندی نظرات</td>
+                            <td>gemini-pro</td>
+                            <td>0.2</td>
+                            <td>Classify...</td>
+                            <td>POSITIVE</td>
+                            <td>دقت 85%</td>
+                        </tr>
+                        <tr>
+                            <td>طبقه‌بندی احساسات v2</td>
+                            <td>طبقه‌بندی نظرات</td>
+                            <td>gemini-pro</td>
+                            <td>0.1</td>
+                            <td>Determine...</td>
+                            <td>POSITIVE</td>
+                            <td>دقت 92%</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div id="بهترین-شیوههای-زنجیره-تفکر" class="section">
+                    <h3>بهترین شیوه‌های زنجیره تفکر (CoT)</h3>
+                    <p>برای مسائل پیچیده، از زنجیره تفکر استفاده کنید تا مدل را به استدلال قدم به قدم هدایت کنید.</p>
+                    
+                    <pre><code>Solve this math problem step by step:
+If a store offers a 20% discount on a $80 item, and then applies a 10% coupon on the discounted price, what is the final price after both discounts are applied?</code></pre>
+                </div>
+                
+                <div id="جمعبندی-بهترین-شیوهها" class="section">
+                    <h3>جمع‌بندی</h3>
+                    <p>مهندسی پرامپت یک مهارت است که با تمرین و آزمایش بهبود می‌یابد. با استفاده از بهترین شیوه‌های ذکر شده در این راهنما، می‌توانید پرامپت‌هایی ایجاد کنید که نتایج بهتری از مدل‌های زبانی بزرگ تولید می‌کنند.</p>
+                    
+                    <p>به یاد داشته باشید:</p>
+                    <ul>
+                        <li>واضح و مستقیم باشید</li>
+                        <li>مثال‌های مناسب ارائه دهید</li>
+                        <li>فرمت خروجی مورد نظر را مشخص کنید</li>
+                        <li>از تکنیک‌های پیشرفته مانند زنجیره تفکر (CoT) برای مسائل پیچیده استفاده کنید</li>
+                        <li>پرامپت‌های خود را مستند کنید و بهبود دهید</li>
+                    </ul>
+                    
+                    <p>با تمرین و آزمایش مداوم، مهارت‌های مهندسی پرامپت شما به طور قابل توجهی بهبود خواهد یافت.</p>
+                </div>
+            </div>
+            
+            <div id="نمونه-کاربردهای-عملی" class="section">
+                <h2>7. نمونه کاربردهای عملی</h2>
+                <p>در این بخش، برخی از کاربردهای عملی مهندسی پرامپت را بررسی می‌کنیم که می‌توانید در پروژه‌های خود از آن‌ها استفاده کنید.</p>
+
+                <div id="خلاصهسازی-متن" class="section">
+                    <h3>خلاصه‌سازی متن</h3>
+                    <pre><code>Summarize the following article in 3-5 sentences while preserving the key information:
+
+{{ARTICLE_TEXT}}</code></pre>
+                </div>
+                
+                <div id="تولید-محتوا" class="section">
+                    <h3>تولید محتوا</h3>
+                    <pre><code>Create a blog post about the benefits of meditation for mental health. The post should be approximately 500 words, include an introduction, 3 main benefits with supporting evidence, and a conclusion.</code></pre>
+                </div>
+                
+                <div id="تحلیل-احساسات" class="section">
+                    <h3>تحلیل احساسات</h3>
+                    <pre><code>Analyze the sentiment of the following customer reviews and classify each as POSITIVE, NEGATIVE, or NEUTRAL:
+
+1. "The product arrived on time and works perfectly. Very satisfied with my purchase."
+2. "Decent quality but the price is too high compared to similar products."
+3. "Absolutely terrible experience. The item was damaged and customer service was unhelpful."</code></pre>
+                </div>
+                
+                <div id="استخراج-اطلاعات" class="section">
+                    <h3>استخراج اطلاعات</h3>
+                    <pre><code>Extract the following information from this resume:
+- Name
+- Email
+- Phone number
+- Education history (institution, degree, dates)
+- Work experience (company, position, dates)
+- Skills
+
+Format the output as JSON.
+
+{{RESUME_TEXT}}</code></pre>
+                </div>
+                
+                <div id="تولید-کد" class="section">
+                    <h3>تولید کد</h3>
+                    <pre><code>Create a Python function that reads a CSV file containing student data (name, age, grade) and returns the average grade for each age group. Include error handling and comments.</code></pre>
+                </div>
+                
+                <div id="ترجمه-زبان" class="section">
+                    <h3>ترجمه زبان</h3>
+                    <pre><code>Translate the following text from English to Spanish, maintaining the same tone and style:
+
+{{TEXT_TO_TRANSLATE}}</code></pre>
+                </div>
+                
+                <div id="پاسخ-به-سوالات" class="section">
+                    <h3>پاسخ به سوالات</h3>
+                    <pre><code>Answer the following questions about quantum computing:
+1. What is a qubit?
+2. How does quantum entanglement work?
+3. What are the potential applications of quantum computing?
+4. What are the current limitations of quantum computers?
+
+Provide detailed but accessible explanations for someone with a basic understanding of physics.</code></pre>
+                </div>
+                
+                <div id="ایجاد-طرح-کلی" class="section">
+                    <h3>ایجاد طرح کلی</h3>
+                    <pre><code>Create a detailed outline for a research paper on the impact of artificial intelligence on healthcare. Include main sections, subsections, and key points to address in each section.</code></pre>
+                </div>
+            </div>
+            
+            <div id="جمعبندی" class="section">
+                <h2>8. جمع‌بندی</h2>
+                <p>مهندسی پرامپت یک مهارت ضروری برای استفاده موثر از مدل‌های زبانی بزرگ است. در این آموزش، ما مفاهیم اساسی مهندسی پرامپت، تنظیمات خروجی LLM، تکنیک‌های مختلف پرامپت، کاربردهای کدنویسی و بهترین شیوه‌ها را پوشش دادیم.</p>
+                
+                <p>به یاد داشته باشید که مهندسی پرامپت یک فرآیند تکراری است. آزمایش با پرامپت‌های مختلف، تنظیمات مدل و تکنیک‌ها برای دستیابی به بهترین نتایج ضروری است. با تمرین و تجربه، شما می‌توانید پرامپت‌هایی ایجاد کنید که پاسخ‌های دقیق، مرتبط و مفید از LLM‌ها دریافت کنند.</p>
+                
+                <p>نکات کلیدی برای به خاطر سپردن:</p>
+                <ol>
+                    <li><strong>واضح و دقیق باشید</strong>: دستورالعمل‌های واضح و دقیق ارائه دهید.</li>
+                    <li><strong>از مثال‌ها استفاده کنید</strong>: برای وظایف پیچیده، مثال‌هایی ارائه دهید تا مدل الگو را درک کند.</li>
+                    <li><strong>فرمت خروجی را مشخص کنید</strong>: ساختار و فرمت خروجی مورد نظر خود را مشخص کنید.</li>
+                    <li><strong>از تکنیک‌های پیشرفته استفاده کنید</strong>: برای مسائل پیچیده، از تکنیک‌هایی مانند زنجیره تفکر (CoT) یا درخت تفکرات (ToT) استفاده کنید.</li>
+                    <li><strong>تنظیمات مدل را بهینه کنید</strong>: با دما، Top-K و Top-P برای دستیابی به تعادل مناسب بین خلاقیت و دقت آزمایش کنید.</li>
+                    <li><strong>آزمایش و تکرار کنید</strong>: پرامپت‌های خود را مستند کنید، نتایج را ارزیابی کنید و بر اساس بازخورد بهبود دهید.</li>
+                </ol>
+                
+                <p>با پیشرفت فناوری LLM، مهندسی پرامپت نیز تکامل خواهد یافت. به روز ماندن با تکنیک‌های جدید و بهترین شیوه‌ها به شما کمک می‌کند تا از این ابزارهای قدرتمند به طور موثر استفاده کنید.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
