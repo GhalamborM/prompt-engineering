@@ -407,7 +407,7 @@
                         <li><a href="#زنجیره-تفکر-chain-of-thought">زنجیره تفکر (Chain of Thought)</a></li>
                         <li><a href="#خودسازگاری-self-consistency">خودسازگاری (Self-consistency)</a></li>
                         <li><a href="#درخت-تفکرات-tree-of-thoughts">درخت تفکرات (Tree of Thoughts)</a></li>
-                        <li><a href="#واکنش-react">Reason & Action (ReAct)</a></li>
+                        <li><a href="#واکنش-react">Reason & Act (ReAct)</a></li>
                     </ul>
                 </li>
                 <li>
@@ -432,7 +432,7 @@
                         <li><a href="#آزمایش-با-فرمتهای-ورودی-و-سبکهای-نوشتاری">آزمایش با فرمت‌های ورودی و سبک‌های
                                 نوشتاری</a></li>
                         <li><a href="#بهترین-شیوههای-زنجیره-تفکر">بهترین شیوه‌های زنجیره تفکر (CoT)</a></li>
-                        <li><a href="#مستندسازی-تلاشهای-مختلف-پرامپت">مستندسازی تلاش‌های مختلف پرامپت</a></li>
+                        <li><a href="#مستندسازی-تلاشهای-مختلف-پرامپت">مستندسازی پرامپت</a></li>
                     </ul>
                 </li>
                 <li><a href="#نمونه-کاربردهای-عملی">7. نمونه کاربردهای عملی</a></li>
@@ -444,12 +444,11 @@
             <!-- Content will be filled in the next step -->
 
             <div id="books-download" class="section">
-                <h2>دانلود کتاب‌ها</h2>
-                <p>در این بخش می‌توانید کتاب‌های مرتبط را دانلود کنید:</p>
+                <h2>دانلود کتاب‌</h2>
                 <ul dir="ltr" style="text-align: left;">
-                    <li><a target="_blank" href="books/2025_Google_Prompt_Engineering_v7.pdf" download>Google Prompt Engineering (2025)</a> 🔹 </li>
-                    <li><a target="_blank" href="books/2025_How_to_Become_a_Prompt_God.pdf" download>How to Become a Prompt God: Mastering Advanced Prompt Engineering For AI (2025)</a></li>
-                    <li><a target="_blank" href="books/2025_Prompt_Engineering_for_Generative_AI.pdf" download>Prompt Engineering for GenerativeAI (2024)</a></li>
+                    <li><a target="_blank" href="books/2025_Google_Prompt_Engineering_v7.pdf" download>Google Prompt Engineering (2025)</a> </li>
+                    <!-- <li><a target="_blank" href="books/2025_How_to_Become_a_Prompt_God.pdf" download>How to Become a Prompt God: Mastering Advanced Prompt Engineering For AI (2025)</a></li> -->
+                    <!-- <li><a target="_blank" href="books/2025_Prompt_Engineering_for_Generative_AI.pdf" download>Prompt Engineering for GenerativeAI (2024)</a></li> -->
                 </ul>
             </div>
 
@@ -662,7 +661,7 @@
                         احتمالاً قبل از اینکه در یک کد قرار بگیرند، از چندین تکرار عبور خواهند کرد، بنابراین مهم است که
                         کار مهندسی پرامپت خود را به روشی منظم و ساختاریافته پیگیری کنید. اطلاعات بیشتر در مورد این فرمت
                         جدول، اهمیت پیگیری کار مهندسی پرامپت و فرآیند توسعه پرامپت در بخش بهترین شیوه‌ها در ادامه این
-                        فصل ("مستندسازی تلاش‌های مختلف پرامپت") آمده است.</p>
+                        فصل ("مستندسازی پرامپت") آمده است.</p>
 
                     <p>دمای مدل باید روی عدد پایینی تنظیم شود، زیرا نیازی به خلاقیت نیست، و ما از مقادیر پیش‌فرض Top-K و
                         Top-P مدل gemini-pro استفاده می‌کنیم، که به طور مؤثر هر دو تنظیم را غیرفعال می‌کند (به 'تنظیمات
@@ -1273,31 +1272,28 @@ French:</code></pre>
                             فرض کنید می‌خواهید مدل متنی درباره کنسول بازی انقلابی "سگا دریم‌کست" بنویسد. می‌توانید درخواستتان را به شکل‌های مختلفی بنویسید، و هر کدام جواب متفاوتی خواهد داد:                            
                         </p>
                         <p>
-                            <div style="text-align: center; width: 100%;" dir="ltr">Question: What was the Sega Dreamcast and why was it such a revolutionary console?
+                            <b>سوالی</b>
+                            <pre><code>What was the Sega Dreamcast and why was it such a revolutionary console?</code></pre>
+                            <pre><code style="text-align: right; direction: rtl;">سگا دریم‌کست چه بود و چرا یک کنسول انقلابی محسوب می‌شد؟</code></pre>
 
-                            </div>
                             <div style="text-align: center; width: 100%;">
-                                سوال: سگا دریم‌کست چه بود و چرا یک کنسول انقلابی محسوب می‌شد؟
                             </div>
                         </p>
                         <p>
-                            <div style="text-align: center; width: 100%;" dir="ltr">Statement: The Sega Dreamcast was a sixth-generation video game console released by
-                                Sega in 1999. It...
+                            <b>خبری</b>
+                            <pre><code>The Sega Dreamcast was a sixth-generation video game console released by Sega in 1999. It...</code></pre>
+                            <pre><code style="direction: rtl; text-align: right;">سگا دریم‌کست یک کنسول بازی نسل ششم بود که توسط سگا در سال ۱۹۹۹ منتشر شد. این کنسول...</code></pre>
 
-                            </div>
-                            <div style="text-align: center; width: 100%;">
-                                جمله خبری: سگا دریم‌کست یک کنسول بازی نسل ششم بود که توسط سگا در سال ۱۹۹۹ منتشر شد. این کنسول...
-                            </div>
                         </p>
+
 
                         <p>
-                            <div style="text-align: center; width: 100%;" dir="ltr">Instruction: Write a single paragraph that describes the Sega Dreamcast console and explains why it was so revolutionary.
+                            <b>دستوری</b>
+                            <pre><code>Write a single paragraph that describes the Sega Dreamcast console and explains why it was so revolutionary.</code></pre>
+                            <pre><code style="direction: rtl; text-align: right;">یک پاراگراف بنویس که کنسول سگا دریم‌کست را توصیف کند و توضیح دهد چرا اینقدر انقلابی بود.</code></pre>
 
-                            </div>
-                            <div style="text-align: center; width: 100%;">
-                                دستورالعمل: یک پاراگراف بنویس که کنسول سگا دریم‌کست را توصیف کند و توضیح دهد چرا اینقدر انقلابی بود.
-                            </div>
                         </p>
+
 
                     </div>
 
@@ -1441,41 +1437,15 @@ JSON Schema یه قالب مشخص برای ورودی JSON تعریف می‌ک
                         </p>
                     </div>
                     <div id="مستندسازی-تلاشهای-مختلف-پرامپت" class="section">
-                        <h3>مستندسازی تلاش‌های مختلف پرامپت</h3>
+                        <h3>مستندسازی پرامپت</h3>
                         <p>پرامپت‌های خود و نتایج آن‌ها را مستند کنید تا بتوانید آنچه کار می‌کند و آنچه کار نمی‌کند را
                             پیگیری کنید.</p>
 
-                        <p><strong>نمونه جدول مستندسازی:</strong></p>
 
-                        <table>
-                            <tr>
-                                <th>نام پرامپت</th>
-                                <th>هدف</th>
-                                <th>مدل</th>
-                                <th>دما</th>
-                                <th>پرامپت</th>
-                                <th>خروجی</th>
-                                <th>نتیجه</th>
-                            </tr>
-                            <tr>
-                                <td>طبقه‌بندی احساسات v1</td>
-                                <td>طبقه‌بندی نظرات</td>
-                                <td>gemini-pro</td>
-                                <td>0.2</td>
-                                <td>Classify...</td>
-                                <td>POSITIVE</td>
-                                <td>دقت 85%</td>
-                            </tr>
-                            <tr>
-                                <td>طبقه‌بندی احساسات v2</td>
-                                <td>طبقه‌بندی نظرات</td>
-                                <td>gemini-pro</td>
-                                <td>0.1</td>
-                                <td>Determine...</td>
-                                <td>POSITIVE</td>
-                                <td>دقت 92%</td>
-                            </tr>
-                        </table>
+                        <img src="images/document-template.png" width="700" />
+
+                        <a href="files/prompting_template.docx"  target="_blank" download>دانلود تمپلیت (docx)</a>
+                        <!-- <a href="">دانلود LaTeX</a> -->
                     </div>
 
                     <div id="جمعبندی-بهترین-شیوهها" class="section">
